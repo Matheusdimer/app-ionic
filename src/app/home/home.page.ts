@@ -1,16 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+  styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
-  constructor(private activatedRoute: ActivatedRoute, private navCtrl: NavController) { }
-
-  public login() {
+export class HomePage implements OnInit, OnDestroy {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private navCtrl: NavController,
+    private menuCtrl: MenuController
+  ) {}
+  
+  login() {
     this.navCtrl.navigateRoot('/categorias');
+  }
+  
+  ngOnInit() {
+    this.menuCtrl.enable(false);
+  }
+  
+  ngOnDestroy(): void {
+    this.menuCtrl.enable(true);
   }
 }
